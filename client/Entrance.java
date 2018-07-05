@@ -20,11 +20,8 @@ public class Entrance implements ActionListener {
 
 	// コンストラクタ
 	public Entrance(JFrame frame) {
-
 		introduction.setBounds(50, 30, 100, 30);
-
 		user.setBounds(70, 200, 200, 30);
-
 		name.setBounds(70, 230, 200, 30);
 
 		submit.setBounds(300, 230, 100, 30);
@@ -44,9 +41,7 @@ public class Entrance implements ActionListener {
 
 	// ボタン操作(名前の入力)
 	public void actionPerformed(ActionEvent e) {
-
 		String Name = name.getText();
-
 		int length = Name.getBytes().length;
 
 		// 3文字未満の入力は禁止(再入力要請)

@@ -20,7 +20,7 @@ public class RequestExhibit implements ActionListener {
 	JLabel user = new JLabel("商品の名前と初期価格を入力してください");
 	JLabel nameT = new JLabel("商品の名前:");
 	JLabel priceT = new JLabel("初期価格:  ");
-	JLabel fileT = new JLabel("ファイル名:");//相対パスの場合はauctionフォルダに入れる
+	JLabel fileT = new JLabel("ファイル名:");// 相対パスの場合はauctionフォルダに入れる
 
 	JTextField name = new JTextField();
 	JTextField price = new JTextField();
@@ -72,7 +72,7 @@ public class RequestExhibit implements ActionListener {
 		frame.getContentPane().add(err);
 
 		String dir = System.getProperty("user.dir");
-	    System.out.println("Projectのトップレベルのパス： " + dir);
+		System.out.println("Projectのトップレベルのパス： " + dir);
 	}
 
 	// 文字列が自然数であるかどうか
@@ -100,10 +100,9 @@ public class RequestExhibit implements ActionListener {
 		int length = Name.getBytes().length;
 
 		// 3文字未満の入力は禁止(再入力要請)
-		if(!f.exists()){
+		if (!f.exists()) {
 			err.setText("ファイル名が正しくありません");
-		}
-		else if (length < 3) {
+		} else if (length < 3) {
 			err.setText("短すぎます(名前は半角3文字以上です)");
 		}
 		// 13文字以上の入力も禁止(再入力要請)
@@ -120,7 +119,9 @@ public class RequestExhibit implements ActionListener {
 		} else if (!isNumber(Price)) {
 			err.setText("適切な数値を入力してください");
 		} else {
-			client.sendMessage("addExhibit " + Name + "," + Integer.parseInt(Price) + "," + file.getText());
+			client.sendMessage("addExhibit " + Name + "," + Integer.parseInt(Price) + "," + file.getText() + ","
+					+ (int)f.length());
+			System.out.println("fileSize: " +  f.length());
 			frame.dispose();
 		}
 	}

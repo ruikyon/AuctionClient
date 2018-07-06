@@ -43,7 +43,7 @@ public class AuctionClient implements Runnable, ActionListener {
 		frame.setVisible(true);
 	}
 
-	private static final String HOST = "192.168.56.1";// "10.24.89.120",
+	private static final String HOST = "10.24.91.141";// "10.24.89.120",
 														// 接続先サーバのホスト名(IPアドレス)
 	private static final int PORT = 8080; // 接続先ポート番号
 
@@ -204,12 +204,15 @@ public class AuctionClient implements Runnable, ActionListener {
 				} else {
 					System.out.println("image receiving: " + fileSize);
 					String outFile = "out.jpg"; // 受信したファイルの保存先
-					byte[] buffer = new byte[512]; // ファイル受信時のバッファ
+					byte[] buffer = new byte[128]; // ファイル受信時のバッファ
 					OutputStream output = new FileOutputStream(outFile);// 送信ストリーム
 
 					// ファイルをストリームで受信
 					int fileLength, totalLength = 0;
 					socket.setSoTimeout(5000);
+					//socket.setSendBufferSize(32768);
+					//socket.setReceiveBufferSize(65536);
+
 					try {
 						while ((fileLength = input.read(buffer)) > 0) {
 							output.write(buffer, 0, fileLength);
@@ -526,13 +529,16 @@ public class AuctionClient implements Runnable, ActionListener {
 	private void sendImage(String fileName) {
 		File file = new File(fileName); // 送信するファイルのオブジェクト
 		sendMessage("image " + file.length());
-		byte[] buffer = new byte[256]; // ファイル送信時のバッファ
+		byte[] buffer = new byte[128]; // ファイル送信時のバッファ
 		System.out.println("image sending");
 
 		try {
 			// ストリームの準備
 			InputStream inputStream = new FileInputStream(file);
 			OutputStream outputStream = socket.getOutputStream();
+
+			//socket.setSendBufferSize(16384);
+			//socket.setReceiveBufferSize(65536);
 
 			// ファイルをストリームで送信
 			int fileLength;
